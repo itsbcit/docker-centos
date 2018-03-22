@@ -10,7 +10,7 @@
         "source": {
             "type": "Git",
             "git": {
-                "uri": "https://stash.its.bcit.ca/DOC/openshift-centos7.git"
+                "uri": "https://stash.its.bcit.ca/scm/doc/openshift-centos7.git"
             }
         },
         "strategy": {
