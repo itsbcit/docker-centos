@@ -5,7 +5,7 @@ ENV RUNUSER none
 ENV HOME /
 
 RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY* \
- && yum -y --setopt tsflags=nodocs -d0 install vim-enhanced wget epel-release \
+ && yum -y --setopt tsflags=nodocs -d0 install wget epel-release \
  && rm -rf /var/cache/yum
 
 ADD docker-entrypoint.sh /docker-entrypoint.sh
