@@ -1,3 +1,3 @@
-# openshift-centos7
+# openshift-centos
 
-This is the base image for docker containers based on CentOS 7
+This is the base image for CentOS docker containers
