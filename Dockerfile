@@ -1,5 +1,5 @@
 FROM centos:7
-MAINTAINER Jesse Weisner "jesse_weisner@bcit.ca"
+LABEL maintainer="jesse@weisner.ca"
 
 ENV RUNUSER none
 ENV HOME /
