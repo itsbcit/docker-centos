@@ -9,7 +9,7 @@ RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY* \
  && rm -rf /var/cache/yum
 
 # Add docker-entrypoint script base
-ENV DE_VERSION v1.0
+ENV DE_VERSION v1.1
 ADD https://github.com/itsbcit/docker-entrypoint/releases/download/${DE_VERSION}/docker-entrypoint.tar.gz /docker-entrypoint.tar.gz
 RUN tar zxvf docker-entrypoint.tar.gz && rm -f docker-entrypoint.tar.gz
 RUN chmod -R 555 /docker-entrypoint.*
