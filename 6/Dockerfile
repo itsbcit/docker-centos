@@ -4,6 +4,8 @@ LABEL maintainer="jesse@weisner.ca"
 ENV RUNUSER none
 ENV HOME /
 
+RUN rm -rf /var/cache/yum/*
+
 RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY* \
  && yum -y --setopt tsflags=nodocs -d0 update \
  && yum -y --setopt tsflags=nodocs -d0 install wget epel-release \
