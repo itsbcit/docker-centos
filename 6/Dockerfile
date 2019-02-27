@@ -9,8 +9,10 @@ RUN rm -rf /var/cache/yum/*
 RUN echo "exclude=mirror.layeronline.com" >> /etc/yum/pluginconf.d/fastestmirror.conf
 
 RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY* \
- && yum -y --setopt tsflags=nodocs -d0 update \
- && yum -y --setopt tsflags=nodocs -d0 install wget epel-release \
+ && yum -y --setopt tsflags=nodocs --setopt timeout=5 update \
+ && yum -y --setopt tsflags=nodocs --setopt timeout=5 install \
+    wget \
+    epel-release \
  && rm -rf /var/cache/yum
 
 # Add docker-entrypoint script base
