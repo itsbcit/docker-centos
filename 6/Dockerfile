@@ -6,7 +6,7 @@ ENV HOME /
 
 RUN rm -rf /var/cache/yum/*
 
-RUN sed -i -e 's/^mirrorlist=\(.*\)/mirrorlist=\1\&cc=ca/' /etc/yum.repos.d/*.repo
+RUN echo "exclude=mirror.layeronline.com" >> /etc/yum/pluginconf.d/fastestmirror.conf
 
 RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY* \
  && yum -y --setopt tsflags=nodocs -d0 update \
