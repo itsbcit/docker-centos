@@ -11,6 +11,7 @@ end
 desc "Update Dockerfile templates"
 task :default do
 
+  maintainer = 'jesse@weisner.ca'
   org_name = 'bcit'
   image_name = 'centos'
   tini_version = '0.17.0'
