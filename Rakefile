@@ -13,12 +13,12 @@ task :default do
 
   org_name = 'bcit'
   image_name = 'centos'
+  tini_version = '0.17.0'
+  de_version   = '1.2'
   tags = [
     '6',
     '7',
   ]
-  tini_version = '0.17.0'
-  de_version   = '1.2'
 
   tags.each do |tag|
       sh "mkdir -p #{tag}"
