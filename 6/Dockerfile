@@ -13,7 +13,7 @@ RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY* \
  && yum -y --setopt tsflags=nodocs --setopt timeout=5 install \
     wget \
     epel-release \
- && rm -rf /var/cache/yum
+ && rm -rf /var/cache/yum/*
 
 # Add docker-entrypoint script base
 ENV DE_VERSION v1.1
