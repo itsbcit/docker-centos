@@ -17,7 +17,7 @@ task :default do
   org_name = 'bcit'
   image_name = 'centos'
   tini_version = '0.17.0'
-  de_version   = '1.2'
+  de_version   = '1.3'
   tags = [
     '6',
     '7',
