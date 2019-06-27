@@ -15,6 +15,7 @@ RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY* \
     epel-release \
  && rm -rf /var/cache/yum/*
 
+<% if !tag.include? "supervisord" %>
 # Add docker-entrypoint script base
 ENV DE_VERSION v<%= de_version %>
 ADD https://github.com/itsbcit/docker-entrypoint/releases/download/${DE_VERSION}/docker-entrypoint.tar.gz /docker-entrypoint.tar.gz
@@ -31,3 +32,7 @@ ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
 RUN chmod +x /tini
 
 ENTRYPOINT ["/tini", "--", "/docker-entrypoint.sh"]
+<% elsif tag.include? "supervisord" %>
+# Install supervisord
+
+<% end %>
