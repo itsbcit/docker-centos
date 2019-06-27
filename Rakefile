@@ -32,7 +32,10 @@ end
 
 desc "Update Dockerfile templates"
 task :Dockerfile do
-  render_template("Dockerfile.erb", "Dockerfile", binding)
+  tags.each do |tag|
+    sh "mkdir -p #{tag}"
+    render_template("Dockerfile.erb", "#{tag}/Dockerfile", binding)
+  end
 end
 
 desc "Build docker images"
