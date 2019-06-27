@@ -1,4 +1,4 @@
-FROM centos:<%= tag %>
+FROM centos:<%= parent_tag %>
 LABEL maintainer="<%= maintainer %>"
 
 ENV RUNUSER none
@@ -15,13 +15,13 @@ RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY* \
     epel-release \
  && rm -rf /var/cache/yum/*
 
-<% if !tag.include? "supervisord" %>
 # Add docker-entrypoint script base
 ENV DE_VERSION v<%= de_version %>
 ADD https://github.com/itsbcit/docker-entrypoint/releases/download/${DE_VERSION}/docker-entrypoint.tar.gz /docker-entrypoint.tar.gz
 RUN tar zxvf docker-entrypoint.tar.gz && rm -f docker-entrypoint.tar.gz
 RUN chmod -R 555 /docker-entrypoint.*
 
+<% if !tag.include? "supervisord" %>
 # Allow resolve-userid.sh script to run
 RUN chmod 664 /etc/passwd /etc/group
 RUN chmod 060 /etc/shadow
@@ -33,6 +33,12 @@ RUN chmod +x /tini
 
 ENTRYPOINT ["/tini", "--", "/docker-entrypoint.sh"]
 <% elsif tag.include? "supervisord" %>
-# Install supervisord
+# Install & configure supervisor
+RUN yum -y --setopt tsflags=nodocs --setopt timeout=5 install \
+    supervisor && \
+    mkdir -p /var/log/supervisor && \
+    mkdir -p /etc/supervisor/conf.d
+ADD supervisor.conf /etc/supervisor.conf
 
+CMD ["supervisord", "-c", "/etc/supervisor.conf"]
 <% end %>
