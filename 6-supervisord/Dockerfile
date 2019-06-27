@@ -36,6 +36,6 @@ RUN yum -y --setopt tsflags=nodocs --setopt timeout=5 install \
     supervisor && \
     mkdir -p /var/log/supervisor && \
     mkdir -p /etc/supervisor/conf.d
-ADD supervisor.conf /etc/supervisor.conf
+COPY supervisor.conf /etc/supervisor.conf
 
 CMD ["supervisord", "-c", "/etc/supervisor.conf"]
