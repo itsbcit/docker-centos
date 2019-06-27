@@ -2,6 +2,12 @@
 
 This is the base image for CentOS docker containers
 
+## Supported Tags
+* [`6`](https://github.com/itsbcit/openshift-centos/blob/master/6/Dockerfile)
+* [`6-supervisord`](https://github.com/itsbcit/openshift-centos/blob/master/6-supervisord/Dockerfile)
+* [`7`](https://github.com/itsbcit/openshift-centos/blob/master/7/Dockerfile)
+* [`7-supervisord`](https://github.com/itsbcit/openshift-centos/blob/master/7-supervisord/Dockerfile)
+
 ## supervisord version
 [http://supervisord.org/configuration.html]()
 
