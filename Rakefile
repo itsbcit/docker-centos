@@ -15,8 +15,13 @@ org_name = 'bcit'
 image_name = 'centos'
 tini_version = '0.17.0'
 de_version   = '1.3'
+parent_tags = [
+  '6',
+  '7',
+]
 tags = [
   '6',
+  '6-supervisord',
   '7',
   '7-supervisord',
 ]
@@ -33,8 +38,12 @@ end
 desc "Update Dockerfile templates"
 task :Dockerfile do
   tags.each do |tag|
-    sh "mkdir -p #{tag}"
-    render_template("Dockerfile.erb", "#{tag}/Dockerfile", binding)
+    parent_tags.each do |parent_tag|
+      if tag.include? parent_tag
+        sh "mkdir -p #{tag}"
+        render_template("Dockerfile.erb", "#{tag}/Dockerfile", binding)
+      end
+    end
   end
 end
 
