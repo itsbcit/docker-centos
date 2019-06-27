@@ -21,7 +21,6 @@ ADD https://github.com/itsbcit/docker-entrypoint/releases/download/${DE_VERSION}
 RUN tar zxvf docker-entrypoint.tar.gz && rm -f docker-entrypoint.tar.gz
 RUN chmod -R 555 /docker-entrypoint.*
 
-<% if !tag.include? "supervisord" %>
 # Allow resolve-userid.sh script to run
 RUN chmod 664 /etc/passwd /etc/group
 RUN chmod 060 /etc/shadow
@@ -32,7 +31,7 @@ ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
 RUN chmod +x /tini
 
 ENTRYPOINT ["/tini", "--", "/docker-entrypoint.sh"]
-<% elsif tag.include? "supervisord" %>
+<% if tag.include? "supervisord" %>
 # Install & configure supervisor
 RUN yum -y --setopt tsflags=nodocs --setopt timeout=5 install \
     supervisor && \
