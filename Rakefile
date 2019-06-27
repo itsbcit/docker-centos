@@ -29,9 +29,9 @@ tags = [
 desc "Template, build, tag, push"
 task :default do
   Rake::Task[:Dockerfile].invoke
-  # Rake::Task[:build].invoke
-  # Rake::Task[:test].invoke
-  # Rake::Task[:push].invoke
+  Rake::Task[:build].invoke
+  Rake::Task[:test].invoke
+  Rake::Task[:push].invoke
 end
 
 desc "Update Dockerfile templates"
