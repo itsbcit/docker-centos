@@ -1,5 +1,5 @@
 FROM centos:7
-LABEL maintainer="jesse@weisner.ca"
+LABEL maintainer="jesse@weisner.ca, chriswood.ca@gmail.com"
 
 ENV RUNUSER none
 ENV HOME /
