@@ -31,7 +31,6 @@ task :default do
   Rake::Task[:Dockerfile].invoke
   # Rake::Task[:build].invoke
   # Rake::Task[:test].invoke
-  # Rake::Task[:tag].invoke
   # Rake::Task[:push].invoke
 end
 
@@ -44,27 +43,36 @@ task :Dockerfile do
         render_template("Dockerfile.erb", "#{tag}/Dockerfile", binding)
       end
     end
+    if tag.include? "supervisor"
+      sh "cp -f supervisor.conf #{tag}/supervisor.conf"
+    end
   end
 end
 
 desc "Build docker images"
 task :build do
-  sh "docker build -t #{org_name}/#{image_name}:#{tag} . --no-cache --pull"
+  tags.each do |tag|
+    Dir.chdir(tag) do
+      sh "docker build -t #{org_name}/#{image_name}:#{tag} . --no-cache --pull"
+    end
+  end
 end
 
 desc "Test docker images"
 task :test do
-  puts "Running tests on #{org_name}/#{image_name}:#{tag}"
-  puts "lol"
-end
-
-desc "Tag docker images"
-task :tag do
-  sh "docker tag #{org_name}/#{image_name}:#{tag} #{org_name}/#{image_name}:latest"
+  tags.each do |tag|
+    Dir.chdir(tag) do
+      puts "Running tests on #{org_name}/#{image_name}:#{tag}"
+      puts "lol"
+    end
+  end
 end
 
 desc "Push to Docker Hub"
 task :push do
-  sh "docker push #{org_name}/#{image_name}:#{tag}"
-  sh "docker push #{org_name}/#{image_name}:latest"
+  tags.each do |tag|
+    Dir.chdir(tag) do
+      sh "docker push #{org_name}/#{image_name}:#{tag}"
+    end
+  end
 end
