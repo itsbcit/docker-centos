@@ -15,6 +15,7 @@ org_name          = 'bcit'
 image_name        = 'centos'
 tini_version      = '0.17.0'
 de_version        = '1.3'
+dockerize_version = '0.6.1'
 parent_tags       = [
   '6',
   '7',
