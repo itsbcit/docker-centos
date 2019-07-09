@@ -22,6 +22,13 @@ RUN tar zxvf docker-entrypoint.tar.gz \
  && chmod 664 /etc/passwd /etc/group\
  && chmod 060 /etc/shadow
 
+# Add dockerize
+ADD https://github.com/jwilder/dockerize/releases/download/v0.6.1/dockerize-linux-amd64-v0.6.1.tar.gz /dockerize.tar.gz
+RUN tar zxf /dockerize.tar.gz -C /usr/local/bin \
+ && chown 0:0 /usr/local/bin/dockerize \
+ && chmod 0555 /usr/local/bin/dockerize \
+ && rm -f /dockerize.tar.gz
+
 # Add Tini
 ADD https://github.com/krallin/tini/releases/download/v0.18.0/tini-static-amd64 /tini
 RUN chmod +x /tini
