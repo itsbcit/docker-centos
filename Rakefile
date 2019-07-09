@@ -10,16 +10,16 @@ def render_template(template, output, scope)
     end
 end
 
-maintainer = 'jesse@weisner.ca, chriswood.ca@gmail.com'
-org_name = 'bcit'
-image_name = 'centos'
-tini_version = '0.17.0'
-de_version   = '1.3'
-parent_tags = [
+maintainer        = 'jesse@weisner.ca, chriswood.ca@gmail.com'
+org_name          = 'bcit'
+image_name        = 'centos'
+tini_version      = '0.17.0'
+de_version        = '1.3'
+parent_tags       = [
   '6',
   '7',
 ]
-tags = [
+tags              = [
   '6',
   '6-supervisord',
   '7',
