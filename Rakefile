@@ -13,7 +13,7 @@ end
 maintainer        = 'jesse@weisner.ca, chriswood.ca@gmail.com'
 org_name          = 'bcit'
 image_name        = 'centos'
-tini_version      = '0.17.0'
+tini_version      = '0.18.0'
 de_version        = '1.3'
 dockerize_version = '0.6.1'
 parent_tags       = [
