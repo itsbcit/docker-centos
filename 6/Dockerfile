@@ -1,5 +1,6 @@
 FROM centos:6
 LABEL maintainer="jesse@weisner.ca, chriswood.ca@gmail.com"
+LABEL build_id="1567100169"
 
 ENV RUNUSER none
 ENV HOME /
@@ -15,19 +16,19 @@ RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY* \
  && rm -rf /var/cache/yum/*
 
 # Add docker-entrypoint script base
-ADD https://github.com/itsbcit/docker-entrypoint/releases/download/v1.3/docker-entrypoint.tar.gz /docker-entrypoint.tar.gz
-RUN tar zxvf docker-entrypoint.tar.gz \
- && rm -f docker-entrypoint.tar.gz \
- && chmod -R 555 /docker-entrypoint.* \
- && chmod 664 /etc/passwd /etc/group\
- && chmod 060 /etc/shadow
+ADD https://github.com/itsbcit/docker-entrypoint/releases/download/v1.5/docker-entrypoint.tar.gz /docker-entrypoint.tar.gz
+RUN tar zxvf docker-entrypoint.tar.gz && rm -f docker-entrypoint.tar.gz \
+&& chmod -R 555 /docker-entrypoint.* \
+&& chmod 664 /etc/passwd /etc/group /etc/shadow \
+&& chown 0:0 /etc/shadow \
+&& chmod 775 /etc
 
 # Add dockerize
-ADD https://github.com/jwilder/dockerize/releases/download/v0.6.1/dockerize-linux-amd64-v0.6.1.tar.gz /dockerize.tar.gz
+ADD https://github.com/jwilder/dockerize/releases/download/v0.6.0/dockerize-alpine-linux-amd64-v0.6.0.tar.gz /dockerize.tar.gz
 RUN tar zxf /dockerize.tar.gz -C /usr/local/bin \
- && chown 0:0 /usr/local/bin/dockerize \
- && chmod 0555 /usr/local/bin/dockerize \
- && rm -f /dockerize.tar.gz
+&& chown 0:0 /usr/local/bin/dockerize \
+&& chmod 0555 /usr/local/bin/dockerize \
+&& rm -f /dockerize.tar.gz
 
 # Add Tini
 ADD https://github.com/krallin/tini/releases/download/v0.18.0/tini-static-amd64 /tini
