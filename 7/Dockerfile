@@ -1,6 +1,6 @@
 FROM centos:7
 LABEL maintainer="jesse@weisner.ca, chriswood.ca@gmail.com"
-LABEL build_id="1567100169"
+LABEL build_id="1567118107"
 
 ENV RUNUSER none
 ENV HOME /
@@ -30,6 +30,8 @@ RUN [ -d /usr/local/bin ] || mkdir -p /usr/local/bin \
  && chown 0:0 /usr/local/bin/dockerize \
  && chmod 0555 /usr/local/bin/dockerize \
  && rm -f /dockerize.tar.gz
+
+ENV DOCKERIZE_ENV production
 
 # Add Tini
 ADD https://github.com/krallin/tini/releases/download/v0.18.0/tini-static-amd64 /tini
