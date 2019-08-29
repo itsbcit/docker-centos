@@ -1,6 +1,5 @@
 ---
 image_name: centos
-org_name: bcit
 labels:
   maintainer: "jesse@weisner.ca, chriswood.ca@gmail.com"
 versions:
@@ -13,7 +12,3 @@ variants:
   supervisord:
     files:
       - supervisor.conf
-vars:
-  tini_version: '0.18.0'
-  de_version: '1.5'
-  dockerize_version: '0.6.0'
