@@ -1,78 +1,46 @@
-require "erb"
+# frozen_string_literal: true
 
-# @ripienaar https://www.devco.net/archives/2010/11/18/a_few_rake_tips.php
-# Brilliant.
-def render_template(template, output, scope)
-    tmpl = File.read(template)
-    erb = ERB.new(tmpl, 0, "<>")
-    File.open(output, "w") do |f|
-        f.puts erb.result(scope)
-    end
+require 'erb'
+require 'fileutils'
+require 'tempfile'
+require 'yaml'
+require 'open-uri'
+
+Dir.glob('lib/*.rb').each { |l| load l } if Dir.exist?('lib')
+Dir.glob('lib/*.rb').each { |l| load l } if Dir.exist?('local')
+
+puts('WARNING: metadata.yaml not found.') unless File.exist?('metadata.yaml')
+puts('WARNING: Rakefile library not found.') unless File.exist?('lib')
+
+if File.exist?('metadata.yaml') && File.exist?('lib')
+  $metadata = YAML.safe_load(File.read('metadata.yaml'))
+  $images = build_objects_array(
+    metadata: $metadata,
+    build_id: build_timestamp
+  )
 end
 
-maintainer        = 'jesse@weisner.ca, chriswood.ca@gmail.com'
-org_name          = 'bcit'
-image_name        = 'centos'
-tini_version      = '0.18.0'
-de_version        = '1.3'
-dockerize_version = '0.6.1'
-parent_tags       = [
-  '6',
-  '7',
-]
-tags              = [
-  '6',
-  '6-supervisord',
-  '7',
-  '7-supervisord',
-]
-
-desc "Template, build, tag, push"
-task :default do
-  Rake::Task[:Dockerfile].invoke
-  Rake::Task[:build].invoke
-  Rake::Task[:test].invoke
+desc 'Install Rakefile support files'
+task :install do
+  open('https://github.com/itsbcit/docker-rakefile/releases/latest/download/lib.zip') do |archive|
+    FileUtils.remove_entry('lib') if File.exist?('lib')
+    tempfile = Tempfile.new(['lib', '.zip'])
+    File.open(tempfile.path, 'wb') do |f|
+      f.write(archive.read)
+    end
+    system('unzip', tempfile.path)
+    tempfile.unlink
+  end
 end
 
-desc "Update Dockerfile templates"
-task :Dockerfile do
-  tags.each do |tag|
-    parent_tags.each do |parent_tag|
-      if tag.include? parent_tag
-        sh "mkdir -p #{tag}"
-        render_template("Dockerfile.erb", "#{tag}/Dockerfile", binding)
-      end
-    end
-    if tag.include? "supervisor"
-      sh "cp -f supervisor.conf #{tag}/supervisor.conf"
+desc 'Update Rakefile to latest release version'
+task :update do
+  open('https://github.com/itsbcit/docker-rakefile/releases/latest/download/Rakefile') do |rakefile|
+    File.open('Rakefile', 'wb') do |f|
+      f.write(rakefile.read)
     end
   end
 end
 
-desc "Build docker images"
-task :build do
-  tags.each do |tag|
-    Dir.chdir(tag) do
-      sh "docker build -t #{org_name}/#{image_name}:#{tag} . --no-cache --pull"
-    end
-  end
-end
-
-desc "Test docker images"
-task :test do
-  tags.each do |tag|
-    Dir.chdir(tag) do
-      puts "Running tests on #{org_name}/#{image_name}:#{tag}"
-      sh "docker run --rm #{org_name}/#{image_name}:#{tag} /bin/sh -c \"echo hello from #{org_name}/#{image_name}:#{tag}\""
-    end
-  end
-end
-
-desc "Push to Registry"
-task :push do
-  tags.each do |tag|
-    Dir.chdir(tag) do
-      sh "docker push #{org_name}/#{image_name}:#{tag}"
-    end
-  end
-end
+Dir.glob('lib/tasks/*.rake').each { |r| load r } if Dir.exist?('lib/tasks')
+Dir.glob('lib/tasks/*.rake').each { |r| load r } if Dir.exist?('local/tasks')
