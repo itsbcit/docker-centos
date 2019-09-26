@@ -5,10 +5,18 @@ labels:
 versions:
   '6':
   '7':
+  '8':
     version_tags:
       - latest
+    vars:
+      source_image: bcit/centos-baseimage
 variants:
   '':
   supervisord:
     files:
       - supervisor.conf
+vars:
+  source_image: centos
+  tini_version: '0.18.0'
+  de_version: '1.5'
+  dockerize_version: '0.6.0'
