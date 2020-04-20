@@ -23,18 +23,9 @@ RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY* \
 
 ENTRYPOINT ["/tini", "--", "/docker-entrypoint.sh"]
 <% if image.variant == 'supervisord' -%>
-<% if image.version == '8' -%>
-# Install & configure supervisor
-RUN yum -y --setopt tsflags=nodocs --setopt timeout=5 install \
-        https://archives.fedoraproject.org/pub/archive/fedora/linux/releases/28/Everything/x86_64/os/Packages/s/supervisor-3.3.3-2.fc28.noarch.rpm \
-        https://archives.fedoraproject.org/pub/archive/fedora/linux/releases/28/Everything/x86_64/os/Packages/p/python3-meld3-1.0.2-6.fc28.noarch.rpm \
-        https://archives.fedoraproject.org/pub/archive/fedora/linux/releases/28/Everything/x86_64/os/Packages/p/python-meld3-1.0.2-6.fc28.noarch.rpm \
-        https://archives.fedoraproject.org/pub/archive/fedora/linux/releases/28/Everything/x86_64/os/Packages/p/python2-meld3-1.0.2-6.fc28.noarch.rpm \
-<% else -%>
 # Install & configure supervisor
 RUN yum -y --setopt tsflags=nodocs --setopt timeout=5 install \
         supervisor \
-<% end -%>
  && mkdir -p /var/log/supervisor \
  && mkdir -p /etc/supervisor/conf.d
 COPY supervisor.conf /etc/supervisor.conf

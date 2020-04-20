@@ -6,10 +6,6 @@ versions:
   '6':
   '7':
   '8':
-    version_tags:
-      - latest
-    vars:
-      source_image: bcit/centos-baseimage
 variants:
   '':
   supervisord:

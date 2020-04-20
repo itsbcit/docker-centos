@@ -1,4 +1,4 @@
-FROM bcit/centos-baseimage:8
+FROM centos:8
 LABEL maintainer="jesse@weisner.ca, chriswood.ca@gmail.com"
 LABEL build_id="1569531573"
 

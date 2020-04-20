@@ -1,4 +1,4 @@
-FROM bcit/centos-baseimage:8
+FROM centos:8
 LABEL maintainer="jesse@weisner.ca, chriswood.ca@gmail.com"
 LABEL build_id="1569531573"
 
@@ -41,10 +41,7 @@ RUN chmod +x /tini
 ENTRYPOINT ["/tini", "--", "/docker-entrypoint.sh"]
 # Install & configure supervisor
 RUN yum -y --setopt tsflags=nodocs --setopt timeout=5 install \
-        https://archives.fedoraproject.org/pub/archive/fedora/linux/releases/28/Everything/x86_64/os/Packages/s/supervisor-3.3.3-2.fc28.noarch.rpm \
-        https://archives.fedoraproject.org/pub/archive/fedora/linux/releases/28/Everything/x86_64/os/Packages/p/python3-meld3-1.0.2-6.fc28.noarch.rpm \
-        https://archives.fedoraproject.org/pub/archive/fedora/linux/releases/28/Everything/x86_64/os/Packages/p/python-meld3-1.0.2-6.fc28.noarch.rpm \
-        https://archives.fedoraproject.org/pub/archive/fedora/linux/releases/28/Everything/x86_64/os/Packages/p/python2-meld3-1.0.2-6.fc28.noarch.rpm \
+        supervisor \
  && mkdir -p /var/log/supervisor \
  && mkdir -p /etc/supervisor/conf.d
 COPY supervisor.conf /etc/supervisor.conf
