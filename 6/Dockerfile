@@ -1,6 +1,6 @@
 FROM centos:6
 LABEL maintainer="jesse@weisner.ca, chriswood.ca@gmail.com"
-LABEL build_id="1587422100"
+LABEL build_id="1597349905"
 
 ENV RUNUSER none
 ENV HOME /
@@ -14,6 +14,7 @@ RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY* \
     wget \
     epel-release \
     tar \
+    rsync \
  && rm -rf /var/cache/yum/*
 
 # Add docker-entrypoint script base
