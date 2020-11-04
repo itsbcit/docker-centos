@@ -1,6 +1,7 @@
 FROM <%= image.vars['source_image'] %>:<%= image.version %>
 <%= snippet('labels', binding) -%>
 
+ENV TZ America/Vancouver
 ENV RUNUSER none
 ENV HOME /
 

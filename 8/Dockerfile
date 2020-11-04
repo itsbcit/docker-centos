@@ -1,7 +1,8 @@
 FROM centos:8
 LABEL maintainer="jesse@weisner.ca, chriswood.ca@gmail.com"
-LABEL build_id="1597349905"
+LABEL build_id="1604532654"
 
+ENV TZ America/Vancouver
 ENV RUNUSER none
 ENV HOME /
 
@@ -37,6 +38,7 @@ ENV DOCKERIZE_ENV production
 
 # Add Tini
 ADD https://github.com/krallin/tini/releases/download/v0.18.0/tini-static-amd64 /tini
-RUN chmod +x /tini
+RUN chmod +x /tini \
+ && ln -s /tini /sbin/tini 
 
 ENTRYPOINT ["/tini", "--", "/docker-entrypoint.sh"]
