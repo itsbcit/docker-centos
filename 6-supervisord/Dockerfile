@@ -9,6 +9,8 @@ ENV HOME /
 RUN rm -rf /var/cache/yum/* \
  && echo "exclude=mirror.layeronline.com" >> /etc/yum/pluginconf.d/fastestmirror.conf
 
+COPY 6-CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo
+
 RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY* \
  && yum -y --setopt tsflags=nodocs --setopt timeout=5 update \
  && yum -y --setopt tsflags=nodocs --setopt timeout=5 install \
