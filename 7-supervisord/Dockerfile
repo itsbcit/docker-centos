@@ -45,7 +45,6 @@ ENTRYPOINT ["/tini", "--", "/docker-entrypoint.sh"]
 # Install & configure supervisor
 RUN yum -y --setopt tsflags=nodocs --setopt timeout=5 install \
         supervisor \
- && mkdir -p /var/log/supervisor \
  && mkdir -p /etc/supervisor/conf.d
 COPY supervisor.conf /etc/supervisor.conf
 
