@@ -27,6 +27,9 @@ RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY* \
 
 <%= snippet('tini', binding) -%>
 
+RUN rm -rf /var/log/* \
+ && chmod 1777 /var/log
+
 ENTRYPOINT ["/tini", "--", "/docker-entrypoint.sh"]
 <% if image.variant == 'supervisord' -%>
 # Install & configure supervisor
