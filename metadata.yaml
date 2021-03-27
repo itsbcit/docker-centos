@@ -3,9 +3,6 @@ image_name: centos
 labels:
   maintainer: "jesse@weisner.ca, chriswood.ca@gmail.com"
 versions:
-  '6':
-    files:
-      - 6-CentOS-Base.repo
   '7':
   '8':
 variants:
