@@ -1,4 +1,6 @@
 ---
+registries:
+  - url: bcit.io
 image_name: centos
 labels:
   maintainer: "jesse@weisner.ca, chriswood.ca@gmail.com"
