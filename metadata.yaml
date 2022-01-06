@@ -1,6 +1,7 @@
 ---
 registries:
   - url: bcit.io
+test_command: sleep infinity
 image_name: centos
 labels:
   maintainer: "jesse@weisner.ca, chriswood.ca@gmail.com"
