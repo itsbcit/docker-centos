@@ -1,6 +1,6 @@
 FROM centos:7
 LABEL maintainer="jesse@weisner.ca, chriswood.ca@gmail.com"
-LABEL build_id="1641340808"
+LABEL build_id="1642010285"
 
 ENV TZ America/Vancouver
 ENV RUNUSER none
@@ -9,6 +9,7 @@ ENV HOME /
 RUN rm -rf /var/cache/yum/* \
  && echo "exclude=mirror.layeronline.com" >> /etc/yum/pluginconf.d/fastestmirror.conf
 
+COPY 7/yum.conf /etc/yum.conf
 
 RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY* \
  && yum -y --setopt tsflags=nodocs --setopt timeout=5 update \
