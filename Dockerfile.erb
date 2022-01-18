@@ -28,7 +28,10 @@ RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY* \
 <%= snippet('tini', binding) -%>
 
 RUN rm -rf /var/log/* \
- && chmod 1777 /var/log
+ && chmod 1777 /var/log \
+ && ln -svf "/usr/share/zoneinfo/${TZ}" /etc/localtime \
+ && echo "${TZ}" > /etc/timezone \
+ && chmod 664 /etc/timezone /etc/localtime
 
 ENTRYPOINT ["/tini", "--", "/docker-entrypoint.sh"]
 <% if image.variant == 'supervisord' -%>
