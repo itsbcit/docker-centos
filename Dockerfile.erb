@@ -7,6 +7,10 @@ ENV HOME /
 
 RUN rm -rf /var/cache/yum/* \
  && echo "exclude=mirror.layeronline.com" >> /etc/yum/pluginconf.d/fastestmirror.conf
+<% if image.version == '7' -%>
+
+COPY 7/yum.conf /etc/yum.conf
+<% end -%>
 
 RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY* \
  && yum -y --setopt tsflags=nodocs --setopt timeout=5 update \
@@ -23,12 +27,17 @@ RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY* \
 
 <%= snippet('tini', binding) -%>
 
+RUN rm -rf /var/log/* \
+ && chmod 1777 /var/log \
+ && ln -svf "/usr/share/zoneinfo/${TZ}" /etc/localtime \
+ && echo "${TZ}" > /etc/timezone \
+ && chmod 664 /etc/timezone /etc/localtime
+
 ENTRYPOINT ["/tini", "--", "/docker-entrypoint.sh"]
 <% if image.variant == 'supervisord' -%>
 # Install & configure supervisor
 RUN yum -y --setopt tsflags=nodocs --setopt timeout=5 install \
         supervisor \
- && mkdir -p /var/log/supervisor \
  && mkdir -p /etc/supervisor/conf.d
 COPY supervisor.conf /etc/supervisor.conf
 
