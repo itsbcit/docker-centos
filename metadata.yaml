@@ -3,9 +3,7 @@ image_name: centos
 labels:
   maintainer: "jesse@weisner.ca, chriswood.ca@gmail.com"
 versions:
-  '6':
   '7':
-  '8':
 variants:
   '':
   supervisord:
